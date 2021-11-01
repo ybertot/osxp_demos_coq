@@ -42,5 +42,5 @@
   A live demo of the results in Appel&Bertot2020 about C code implementing
   a square root function.
 
-  This demonstration was last test with coq.1.13.2 and coq-vst.2.8
+  This demonstration was last tested with coq.1.13.2 and coq-vst.2.8
   (compcert.3.9)
