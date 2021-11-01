@@ -21,6 +21,22 @@
 
   This demonstration was last tested with coq.1.13.2 and coq-interval.4.3.0
 
+## compiler
+
+  First clone [the semantics repository](https://github.com/ybertot/semantics.html)
+
+  **File**: little.v
+
+  **File**: asm.v
+
+  A toy language given with a collection of language theory tools:
+  opeerational semantics given as *natural semantics* (big step
+  operational semantics), proofs of equivalence with small-step
+  operational semantics, and a functional description of an
+  interpreter.  File `asm.v` contains a description of a small stack machine,
+  its assembly language (8 instructions), a compiler, and its proof of
+  correctness.
+
 ## VST
 
   A live demo of the results in Appel&Bertot2020 about C code implementing
