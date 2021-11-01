@@ -40,6 +40,7 @@ set (y := 3.14159265358979).
 assert (x_lt_pi : 0 < y < PI).
   unfold y; split. 
     interval.
+  Fail interval.
   interval with (i_prec 128).
 intros intx.
 apply sin_gt_0.
@@ -60,7 +61,8 @@ apply Rminus_gt_0_lt.
 (* Cut the proof in two parts: after PI/2 and before. *)
 case (Rgt_ge_dec x (PI / 2)).
   assert (sin x <= 1) by (assert (tmp := SIN_bound x); lra).
-  assert (tmp := PI2_1); lra.
+  assert (tmp := PI2_1).
+  lra.
 intros xsmall.
 (* Show the value of the derivative. *)
 assert (der : forall c, 0 <= c <= x -> 
@@ -70,7 +72,8 @@ assert (der : forall c, 0 <= c <= x ->
   auto_derive.
     auto.
   ring.
-destruct (MVT_cor2 (fun x => x - sin x) (fun x => 1 - cos x) 0 x xgt0 der) as
+destruct (MVT_cor2 (fun x => x - sin x)
+           (fun x => 1 - cos x) 0 x xgt0 der) as
   [c [feq cint]].
 rewrite sin_0, !Rminus_0_r in feq; rewrite feq.
 apply Rmult_lt_0_compat; cycle 1.
