@@ -37,6 +37,10 @@ Compute test.
 (* Checking that the specification is satisfied on ONE TEST.               *)
 Compute sorted test.
 
+Compute 23 <=? 29.
+
+Compute 7 <=? 5.
+
 (***************************************************************************)
 (********* Proving that the specification is ALWAYS satisfied. *************)
 (***************************************************************************)
@@ -48,26 +52,28 @@ now intros cmpf; apply leb_correct, Nat.lt_le_incl; apply leb_complete_conv.
 Qed.
 
 (* Invariant proof for insert *)
-Lemma insert_sorted (l : list nat) (n : nat) :
+Lemma insert_sorted :
+  forall (l : list nat) (n : nat),
   sorted l = true -> sorted (insert n l) = true.
 Proof.
+intros l n.
 funelim (sorted l).
-    now auto.
-  rewrite insert_equation_2.
+-  now auto.
+- rewrite insert_equation_2.
   case (inspect (n <=? x)); intros [|] h; simpl.
     now rewrite sorted_equation_3, h; simpl; rewrite sorted_equation_2.
   rewrite insert_equation_1, sorted_equation_3.
   now rewrite nat_cmp_false; auto.
-rewrite Bool.andb_true_iff; intros [cmp rec].
-rewrite insert_equation_2.
-case (inspect (n <=? x)); intros [|] h; simpl.
-  now rewrite sorted_equation_3, h, sorted_equation_3, cmp, rec.
-assert (tmp : sorted (insert n (y :: tl)) = true) by auto.
+- rewrite Bool.andb_true_iff; intros [cmp rec].
+  rewrite insert_equation_2.
+  case (inspect (n <=? x)); intros [|] h; simpl.
+    now rewrite sorted_equation_3, h, sorted_equation_3, cmp, rec.
+  assert (tmp : sorted (insert n (y :: tl)) = true) by auto.
   revert tmp.
-rewrite insert_equation_2.
-case (inspect (n <=? y)); intros [|] h'; simpl.
+  rewrite insert_equation_2.
+  case (inspect (n <=? y)); intros [|] h'; simpl.
   intros tmp; rewrite sorted_equation_3, nat_cmp_false; auto.
-rewrite sorted_equation_3, cmp; auto.
+  rewrite sorted_equation_3, cmp; auto.
 Qed.
 
 (* Main proof for the main function *)
