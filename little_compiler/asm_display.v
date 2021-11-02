@@ -21,7 +21,7 @@ Import scomp.
 Definition little_cp s : list assembly :=
   match parse_program (tokenize s Start "") with
     Some (env, i) =>
-    scomp.compile_instr env 0 i
+    scomp.compile_instr (map fst env) 0 i
   | None => nil
   end.
 
